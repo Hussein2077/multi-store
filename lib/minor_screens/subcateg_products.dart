@@ -9,8 +9,13 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 class SubCategProducts extends StatefulWidget {
   final String maincategName;
   final String subcategName;
+  final bool fromOnBoarding;
+
   const SubCategProducts(
-      {Key? key, required this.subcategName, required this.maincategName})
+      {Key? key,
+      required this.subcategName,
+      required this.maincategName,
+      this.fromOnBoarding = false})
       : super(key: key);
 
   @override
@@ -20,7 +25,7 @@ class SubCategProducts extends StatefulWidget {
 class _SubCategProductsState extends State<SubCategProducts> {
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _prodcutsStream = FirebaseFirestore.instance
+    final Stream<QuerySnapshot> prodcutsStream = FirebaseFirestore.instance
         .collection('products')
         .where('maincateg', isEqualTo: widget.maincategName)
         .where('subcateg', isEqualTo: widget.subcategName)
@@ -30,11 +35,20 @@ class _SubCategProductsState extends State<SubCategProducts> {
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: const AppBarBackButton(),
+        leading: widget.fromOnBoarding == true
+            ? IconButton(
+                onPressed: () {
+                  Navigator.pushReplacementNamed(context, '/customer_home');
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios_new,
+                  color: Colors.black,
+                ))
+            : const AppBarBackButton(),
         title: AppBarTitle(title: widget.subcategName),
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: _prodcutsStream,
+        stream: prodcutsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             return const Text('Something went wrong');

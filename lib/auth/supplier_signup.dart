@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,7 @@ class SupplierRegister extends StatefulWidget {
   const SupplierRegister({Key? key}) : super(key: key);
 
   @override
-  _SupplierRegisterState createState() => _SupplierRegisterState();
+  State<SupplierRegister> createState() => _SupplierRegisterState();
 }
 
 class _SupplierRegisterState extends State<SupplierRegister> {
@@ -80,17 +81,22 @@ class _SupplierRegisterState extends State<SupplierRegister> {
     if (_formKey.currentState!.validate()) {
       if (_imageFile != null) {
         try {
-          await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(email: email, password: password);
+          await AuthRepo.singUpWithEmailAndPassword(email, password);
+
+          AuthRepo.sendEmailVerification();
 
           firebase_storage.Reference ref = firebase_storage
               .FirebaseStorage.instance
               .ref('supp-images/$email.jpg');
 
           await ref.putFile(File(_imageFile!.path));
-          _uid = FirebaseAuth.instance.currentUser!.uid;
+          _uid = AuthRepo.uid;
 
           storeLogo = await ref.getDownloadURL();
+
+          AuthRepo.updateUserName(storeName);
+          AuthRepo.updateProfileImage(storeLogo);
+
           await suppliers.doc(_uid).set({
             'storename': storeName,
             'email': email,
@@ -104,8 +110,21 @@ class _SupplierRegisterState extends State<SupplierRegister> {
             _imageFile = null;
           });
 
-          Navigator.pushReplacementNamed(context, '/supplier_login');
+          await Future.delayed(const Duration(milliseconds: 100))
+              .whenComplete(() {
+            Navigator.of(context).pushReplacementNamed('/supplier_login');
+          });
         } on FirebaseAuthException catch (e) {
+          setState(() {
+            processing = false;
+          });
+
+          MyMessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
+
+          /*  setState(() {
+            processing = false;
+          });
+
           if (e.code == 'weak-password') {
             setState(() {
               processing = false;
@@ -118,7 +137,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
             });
             MyMessageHandler.showSnackBar(
                 _scaffoldKey, 'The account already exists for that email.');
-          }
+          } */
         }
       } else {
         setState(() {
@@ -217,7 +236,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           onChanged: (value) {
                             storeName = value;
                           },
-                          //    controller: _namecontroller,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Full Name',
                             hintText: 'Enter your Full Name',
@@ -240,7 +258,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           onChanged: (value) {
                             email = value;
                           },
-                          //  controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
@@ -260,7 +277,6 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           onChanged: (value) {
                             password = value;
                           },
-                          //   controller: _passwordController,
                           obscureText: passwordVisible,
                           decoration: textFormDecoration.copyWith(
                             suffixIcon: IconButton(

@@ -15,7 +15,7 @@ class MenCategory extends StatelessWidget {
             bottom: 0,
             left: 0,
             child: SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+              height: MediaQuery.of(context).size.height * 0.70,
               width: MediaQuery.of(context).size.width * 0.75,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +24,7 @@ class MenCategory extends StatelessWidget {
                     headerLabel: 'Men',
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.68,
+                    height: MediaQuery.of(context).size.height * 0.45,
                     child: GridView.count(
                       mainAxisSpacing: 70,
                       crossAxisSpacing: 15,
@@ -34,7 +34,7 @@ class MenCategory extends StatelessWidget {
                           mainCategName: 'men',
                           subCategName: men[index + 1],
                           assetName: 'images/men/men$index.jpg',
-                          assetLabel: men[index + 1],
+                          subcategLabel: men[index + 1],
                         );
                       }),
                     ),

@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -14,7 +15,7 @@ class CustomerRegister extends StatefulWidget {
   const CustomerRegister({Key? key}) : super(key: key);
 
   @override
-  _CustomerRegisterState createState() => _CustomerRegisterState();
+  State<CustomerRegister> createState() => _CustomerRegisterState();
 }
 
 class _CustomerRegisterState extends State<CustomerRegister> {
@@ -80,17 +81,19 @@ class _CustomerRegisterState extends State<CustomerRegister> {
     if (_formKey.currentState!.validate()) {
       if (_imageFile != null) {
         try {
-          await FirebaseAuth.instance
-              .createUserWithEmailAndPassword(email: email, password: password);
+          await AuthRepo.singUpWithEmailAndPassword(email, password);
+          await AuthRepo.sendEmailVerification();
 
           firebase_storage.Reference ref = firebase_storage
               .FirebaseStorage.instance
               .ref('cust-images/$email.jpg');
 
           await ref.putFile(File(_imageFile!.path));
-          _uid = FirebaseAuth.instance.currentUser!.uid;
+          _uid = AuthRepo.uid;
 
           profileImage = await ref.getDownloadURL();
+          AuthRepo.updateUserName(name);
+          AuthRepo.updateProfileImage(profileImage);
           await customers.doc(_uid).set({
             'name': name,
             'email': email,
@@ -103,22 +106,13 @@ class _CustomerRegisterState extends State<CustomerRegister> {
           setState(() {
             _imageFile = null;
           });
-
-          Navigator.pushReplacementNamed(context, '/customer_login');
+          await Future.delayed(const Duration(microseconds: 100)).whenComplete(
+              () => Navigator.pushReplacementNamed(context, '/customer_login'));
         } on FirebaseAuthException catch (e) {
-          if (e.code == 'weak-password') {
-            setState(() {
-              processing = false;
-            });
-            MyMessageHandler.showSnackBar(
-                _scaffoldKey, 'The password provided is too weak.');
-          } else if (e.code == 'email-already-in-use') {
-            setState(() {
-              processing = false;
-            });
-            MyMessageHandler.showSnackBar(
-                _scaffoldKey, 'The account already exists for that email.');
-          }
+          setState(() {
+            processing = false;
+          });
+          MyMessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
         }
       } else {
         setState(() {
@@ -217,7 +211,6 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                           onChanged: (value) {
                             name = value;
                           },
-                          //    controller: _namecontroller,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Full Name',
                             hintText: 'Enter your Full Name',
@@ -240,7 +233,6 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                           onChanged: (value) {
                             email = value;
                           },
-                          //  controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
@@ -260,7 +252,6 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                           onChanged: (value) {
                             password = value;
                           },
-                          //   controller: _passwordController,
                           obscureText: passwordVisible,
                           decoration: textFormDecoration.copyWith(
                             suffixIcon: IconButton(

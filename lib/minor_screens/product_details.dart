@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper_null_safety/flutter_swiper_null_safety.dart';
 import 'package:multi_store_app/main_screens/cart.dart';
-import 'package:multi_store_app/main_screens/visit_store.dart';
+import 'package:multi_store_app/minor_screens/visit_store.dart';
 import 'package:multi_store_app/minor_screens/full_screen_view.dart';
 import 'package:multi_store_app/models/product_model.dart';
 import 'package:multi_store_app/providers/cart_provider.dart';
@@ -15,6 +15,7 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 import 'package:badges/badges.dart'as badges;
+import 'package:expandable/expandable.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final dynamic proList;
@@ -22,19 +23,26 @@ class ProductDetailsScreen extends StatefulWidget {
       : super(key: key);
 
   @override
-  _ProductDetailsScreenState createState() => _ProductDetailsScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  late final Stream<QuerySnapshot> _prodcutsStream = FirebaseFirestore.instance
-      .collection('proList')
+  late final Stream<QuerySnapshot> prodcutsStream = FirebaseFirestore.instance
+      .collection('products')
       .where('maincateg', isEqualTo: widget.proList['maincateg'])
       .where('subcateg', isEqualTo: widget.proList['subcateg'])
+      .snapshots();
+
+  late final Stream<QuerySnapshot> reviewsStream = FirebaseFirestore.instance
+      .collection('products')
+      .doc(widget.proList['proid'])
+      .collection('reviews')
       .snapshots();
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
   late List<dynamic> imagesList = widget.proList['proimages'];
+
   @override
   Widget build(BuildContext context) {
     var onSale = widget.proList['discount'];
@@ -232,12 +240,20 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                               fontWeight: FontWeight.w600,
                               color: Colors.blueGrey.shade800),
                         ),
+                        Stack(children: [
+                          const Positioned(
+                              right: 50, top: 15, child: Text('total')),
+                          ExpandableTheme(
+                              data: const ExpandableThemeData(
+                                  iconSize: 30, iconColor: Colors.blue),
+                              child: reviews(reviewsStream)),
+                        ]),
                         const ProDetailsHeader(
                           label: '  Similar Items  ',
                         ),
                         SizedBox(
                           child: StreamBuilder<QuerySnapshot>(
-                            stream: _prodcutsStream,
+                            stream: prodcutsStream,
                             builder: (BuildContext context,
                                 AsyncSnapshot<QuerySnapshot> snapshot) {
                               if (snapshot.hasError) {
@@ -325,6 +341,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 padding: EdgeInsets.all(2),
                                 badgeColor: Colors.yellow,
                               ),
+
                               badgeContent: Text(
                                 context
                                     .watch<Cart>()
@@ -414,4 +431,75 @@ class ProDetailsHeader extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget reviews(var reviewsStream) {
+  return ExpandablePanel(
+      header: const Padding(
+        padding: EdgeInsets.all(10),
+        child: Text(
+          'Reviews',
+          style: TextStyle(
+              color: Colors.blue, fontSize: 24, fontWeight: FontWeight.bold),
+        ),
+      ),
+      collapsed: SizedBox(
+        height: 230,
+        child: reviewsAll(reviewsStream),
+      ),
+      expanded: reviewsAll(reviewsStream));
+}
+
+Widget reviewsAll(var reviewsStream) {
+  return StreamBuilder<QuerySnapshot>(
+    stream: reviewsStream,
+    builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot2) {
+      if (snapshot2.connectionState == ConnectionState.waiting) {
+        return const Center(
+          child: CircularProgressIndicator(),
+        );
+      }
+
+      if (snapshot2.data!.docs.isEmpty) {
+        return const Center(
+            child: Text(
+          'This Item \n\n has no Reviews yet !',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 26,
+              color: Colors.blueGrey,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'Acme',
+              letterSpacing: 1.5),
+        ));
+      }
+
+      return ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: snapshot2.data!.docs.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              leading: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      snapshot2.data!.docs[index]['profileimage'])),
+              title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(snapshot2.data!.docs[index]['name']),
+                    Row(
+                      children: [
+                        Text(snapshot2.data!.docs[index]['rate'].toString()),
+                        const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        )
+                      ],
+                    )
+                  ]),
+              subtitle: Text(snapshot2.data!.docs[index]['comment']),
+            );
+          });
+    },
+  );
 }

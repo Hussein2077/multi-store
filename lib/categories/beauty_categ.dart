@@ -33,7 +33,7 @@ class BeautyCategory extends StatelessWidget {
                           mainCategName: 'beauty',
                           subCategName: beauty[index + 1],
                           assetName: 'images/beauty/beauty$index.jpg',
-                          assetLabel: beauty[index + 1],
+                          subcategLabel: beauty[index + 1],
                         );
                       }),
                     ),

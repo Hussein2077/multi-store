@@ -34,7 +34,7 @@ class KidsCategory extends StatelessWidget {
                           mainCategName: 'kids',
                           subCategName: kids[index + 1],
                           assetName: 'images/kids/kids$index.jpg',
-                          assetLabel: kids[index + 1],
+                          subcategLabel: kids[index + 1],
                         );
                       }),
                     ),

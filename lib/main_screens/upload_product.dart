@@ -16,7 +16,7 @@ class UploadProductScreen extends StatefulWidget {
   const UploadProductScreen({Key? key}) : super(key: key);
 
   @override
-  _UploadProductScreenState createState() => _UploadProductScreenState();
+  State<UploadProductScreen> createState() => _UploadProductScreenState();
 }
 
 class _UploadProductScreenState extends State<UploadProductScreen> {
@@ -162,7 +162,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
           subCategList = [];
           imagesUrlList = [];
         });
-        _formKey.currentState!.reset();
+        //   _formKey.currentState!.reset();
       });
     } else {
       print('no images');
@@ -181,7 +181,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
       child: Scaffold(
           body: SafeArea(
             child: SingleChildScrollView(
-              reverse: true,
+              reverse: false,
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               child: Form(
                 key: _formKey,
@@ -223,8 +223,8 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                                     items: maincateg
                                         .map<DropdownMenuItem<String>>((value) {
                                       return DropdownMenuItem(
-                                        child: Text(value),
                                         value: value,
+                                        child: Text(value),
                                       );
                                     }).toList(),
                                     onChanged: (String? value) {
@@ -249,8 +249,8 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                                     items: subCategList
                                         .map<DropdownMenuItem<String>>((value) {
                                       return DropdownMenuItem(
-                                        child: Text(value),
                                         value: value,
+                                        child: Text(value),
                                       );
                                     }).toList(),
                                     onChanged: (String? value) {
@@ -304,6 +304,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                           child: SizedBox(
                             width: MediaQuery.of(context).size.width * 0.38,
                             child: TextFormField(
+                                initialValue: '0',
                                 maxLength: 2,
                                 validator: (value) {
                                   if (value!.isEmpty) {
@@ -313,7 +314,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                                   }
                                   return null;
                                 },
-                                onSaved: (value) {
+                                onSaved: (String? value) {
                                   discount = int.parse(value!);
                                 },
                                 keyboardType:

@@ -1,5 +1,4 @@
-import 'package:badges/badges.dart' as badges;
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:badges/badges.dart'as badges;
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/main_screens/cart.dart';
 import 'package:multi_store_app/main_screens/category.dart';
@@ -10,27 +9,29 @@ import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:provider/provider.dart';
 
 class CustomerHomeScreen extends StatefulWidget {
-  const CustomerHomeScreen({Key? key}) : super(key: key);
+  const CustomerHomeScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  _CustomerHomeScreenState createState() => _CustomerHomeScreenState();
+  State<CustomerHomeScreen> createState() => CustomerHomeScreenState();
 }
 
-class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
+class CustomerHomeScreenState extends State<CustomerHomeScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _tabs = [
+  final List<Widget> tabs = [
     const HomeScreen(),
     const CategoryScreen(),
     const StoresScreen(),
     const CartScreen(),
-    ProfileScreen(
-      documentId: FirebaseAuth.instance.currentUser!.uid,
-    ),
+    const ProfileScreen(
+        /* documentId: FirebaseAuth.instance.currentUser!.uid, */
+        ),
   ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _tabs[_selectedIndex],
+      body: tabs[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
         elevation: 0,
         type: BottomNavigationBarType.fixed,
@@ -51,11 +52,12 @@ class _CustomerHomeScreenState extends State<CustomerHomeScreen> {
             label: 'Stores',
           ),
           BottomNavigationBarItem(
-            icon:badges.Badge(
+            icon: badges.Badge(
                 showBadge: context.read<Cart>().getItems.isEmpty ? false : true,
                 badgeStyle: const badges.BadgeStyle(
                   padding: EdgeInsets.all(2),
                   badgeColor: Colors.yellow,
+
                 ),
                 badgeContent: Text(
                   context.watch<Cart>().getItems.length.toString(),

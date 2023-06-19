@@ -26,7 +26,7 @@ class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key? key}) : super(key: key);
 
   @override
-  _CategoryScreenState createState() => _CategoryScreenState();
+  State<CategoryScreen> createState() => _CategoryScreenState();
 }
 
 class _CategoryScreenState extends State<CategoryScreen> {
@@ -46,17 +46,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Colors.white,
-        title: const FakeSearch(),
-      ),
-      body: Stack(
-        children: [
-          Positioned(bottom: 0, left: 0, child: sideNavigator(size)),
-          Positioned(bottom: 0, right: 0, child: categView(size))
-        ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          title: const FakeSearch(),
+        ),
+        body: Stack(
+          children: [
+            Positioned(bottom: 0, left: 0, child: sideNavigator(size)),
+            Positioned(bottom: 0, right: 0, child: categView(size))
+          ],
+        ),
       ),
     );
   }

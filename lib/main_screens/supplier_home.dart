@@ -12,18 +12,19 @@ class SupplierHomeScreen extends StatefulWidget {
   const SupplierHomeScreen({Key? key}) : super(key: key);
 
   @override
-  _SupplierHomeScreenState createState() => _SupplierHomeScreenState();
+  State<SupplierHomeScreen> createState() => _SupplierHomeScreenState();
 }
 
 class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
   int _selectedIndex = 0;
-  final List<Widget> _tabs = const [
+  final List<Widget> tabs = const [
     HomeScreen(),
     CategoryScreen(),
     StoresScreen(),
     DashboardScreen(),
     UploadProductScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -42,7 +43,7 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
           }
 
           return Scaffold(
-            body: _tabs[_selectedIndex],
+            body: tabs[_selectedIndex],
             bottomNavigationBar: BottomNavigationBar(
               elevation: 0,
               type: BottomNavigationBarType.fixed,
@@ -63,8 +64,9 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
                   label: 'Stores',
                 ),
                 BottomNavigationBarItem(
-                  icon: badges.Badge(
+                  icon:badges.Badge(
                       showBadge: snapshot.data!.docs.isEmpty ? false : true,
+
                       badgeStyle: const badges.BadgeStyle(
                         padding: EdgeInsets.all(2),
                         badgeColor: Colors.yellow,

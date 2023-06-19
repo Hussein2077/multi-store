@@ -15,13 +15,13 @@ class MyAlertDilaog {
         content: Text(content),
         actions: <CupertinoDialogAction>[
           CupertinoDialogAction(
-            child: const Text('No'),
             onPressed: tabNo,
+            child: const Text('No'),
           ),
           CupertinoDialogAction(
-            child: const Text('Yes'),
             isDestructiveAction: true,
             onPressed: tabYes,
+            child: const Text('Yes'),
           )
         ],
       ),

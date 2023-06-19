@@ -7,14 +7,15 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 class ManageProducts extends StatelessWidget {
-  const ManageProducts({Key? key}) : super(key: key);
+  ManageProducts({Key? key}) : super(key: key);
+
+  final Stream<QuerySnapshot> _prodcutsStream = FirebaseFirestore.instance
+      .collection('products')
+      .where('sid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+      .snapshots();
 
   @override
   Widget build(BuildContext context) {
-    final Stream<QuerySnapshot> _prodcutsStream = FirebaseFirestore.instance
-        .collection('products')
-        .where('sid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .snapshots();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,

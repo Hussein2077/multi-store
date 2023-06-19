@@ -11,7 +11,7 @@ class CartScreen extends StatefulWidget {
   const CartScreen({Key? key, this.back}) : super(key: key);
 
   @override
-  _CartScreenState createState() => _CartScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
@@ -149,20 +149,19 @@ class CartItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 60),
-      child: Consumer<Cart>(
-        builder: (context, cart, child) {
-          return ListView.builder(
-              itemCount: cart.count,
-              itemBuilder: (context, index) {
-                final product = cart.getItems[index];
-                return CartModel(
-                  product: product,
-                  cart: context.read<Cart>(),
-                );
-              });
-        },
-      ),
-    );
+        padding: const EdgeInsets.only(bottom: 60),
+        child: Consumer<Cart>(
+          builder: (context, cart, child) {
+            return ListView.builder(
+                itemCount: cart.count,
+                itemBuilder: (context, index) {
+                  final product = cart.getItems[index];
+                  return CartModel(
+                    product: product,
+                    cart: context.read<Cart>(),
+                  );
+                });
+          },
+        ));
   }
 }

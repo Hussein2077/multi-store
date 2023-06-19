@@ -79,7 +79,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 );
 
                 return ListView(
-                  children: result.map((e) => SearchModel(e: e)).toList(),
+                  children: result
+                      .map((e) => SearchModel(
+                            e: e,
+                          ))
+                      .toList(),
                 );
               }),
     );
@@ -88,6 +92,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
 class SearchModel extends StatelessWidget {
   final dynamic e;
+
   const SearchModel({Key? key, required this.e}) : super(key: key);
 
   @override
@@ -97,7 +102,9 @@ class SearchModel extends StatelessWidget {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductDetailsScreen(proList: e)));
+                builder: (context) => ProductDetailsScreen(
+                      proList: e,
+                    )));
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),

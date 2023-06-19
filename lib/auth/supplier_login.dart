@@ -1,13 +1,17 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
+import 'package:multi_store_app/widgets/yellow_button.dart';
 
 class SupplierLogin extends StatefulWidget {
   const SupplierLogin({Key? key}) : super(key: key);
 
   @override
-  _SupplierLoginState createState() => _SupplierLoginState();
+  State<SupplierLogin> createState() => _SupplierLoginState();
 }
 
 class _SupplierLoginState extends State<SupplierLogin> {
@@ -18,6 +22,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
   bool passwordVisible = false;
+  bool sendEmailVeridication = false;
 
   void logIn() async {
     setState(() {
@@ -25,26 +30,30 @@ class _SupplierLoginState extends State<SupplierLogin> {
     });
     if (_formKey.currentState!.validate()) {
       try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(email: email, password: password);
+        await AuthRepo.signInWithEmailAndPassword(email, password);
 
-        _formKey.currentState!.reset();
+        await AuthRepo.reloadUserData();
+        if (await AuthRepo.checkEmailVerification()) {
+          _formKey.currentState!.reset();
 
-        Navigator.pushReplacementNamed(context, '/supplier_home');
-      } on FirebaseAuthException catch (e) {
-        if (e.code == 'user-not-found') {
+          await Future.delayed(const Duration(milliseconds: 100))
+              .whenComplete(() {
+            Navigator.of(context).pushReplacementNamed('/supplier_home');
+          });
+        } else {
+          MyMessageHandler.showSnackBar(
+              _scaffoldKey, 'please check your inbox');
           setState(() {
             processing = false;
+            sendEmailVeridication = true;
           });
-          MyMessageHandler.showSnackBar(
-              _scaffoldKey, 'No user found for that email.');
-        } else if (e.code == 'wrong-password') {
-          setState(() {
-            processing = false;
-          });
-          MyMessageHandler.showSnackBar(
-              _scaffoldKey, 'Wrong password provided for that user.');
         }
+      } on FirebaseAuthException catch (e) {
+        setState(() {
+          processing = false;
+        });
+
+        MyMessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
       }
     } else {
       setState(() {
@@ -72,8 +81,29 @@ class _SupplierLoginState extends State<SupplierLogin> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       const AuthHeaderLabel(headerLabel: 'Log In'),
-                      const SizedBox(
+                      SizedBox(
                         height: 50,
+                        child: sendEmailVeridication == true
+                            ? Center(
+                                child: YellowButton(
+                                    label: 'Resend Email Verification',
+                                    onPressed: () async {
+                                      try {
+                                        await FirebaseAuth.instance.currentUser!
+                                            .sendEmailVerification();
+                                      } catch (e) {
+                                        print(e);
+                                      }
+                                      Future.delayed(const Duration(seconds: 3))
+                                          .whenComplete(() {
+                                        setState(() {
+                                          sendEmailVeridication = false;
+                                        });
+                                      });
+                                    },
+                                    width: 0.6),
+                              )
+                            : const SizedBox(),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
@@ -91,7 +121,6 @@ class _SupplierLoginState extends State<SupplierLogin> {
                           onChanged: (value) {
                             email = value;
                           },
-                          //  controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
@@ -111,7 +140,6 @@ class _SupplierLoginState extends State<SupplierLogin> {
                           onChanged: (value) {
                             password = value;
                           },
-                          //   controller: _passwordController,
                           obscureText: passwordVisible,
                           decoration: textFormDecoration.copyWith(
                             suffixIcon: IconButton(
@@ -132,7 +160,13 @@ class _SupplierLoginState extends State<SupplierLogin> {
                         ),
                       ),
                       TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            /*       Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const ForgotPassword())); */
+                          },
                           child: const Text(
                             'Forget Password ?',
                             style: TextStyle(

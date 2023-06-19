@@ -43,6 +43,7 @@ class Cart extends ChangeNotifier {
 
   void increment(Product product) {
     product.increase();
+
     notifyListeners();
   }
 

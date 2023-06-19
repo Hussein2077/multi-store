@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_app/minor_screens/search.dart';
 
 class FakeSearch extends StatelessWidget {
-  const FakeSearch({
-    Key? key,
-  }) : super(key: key);
+  const FakeSearch({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

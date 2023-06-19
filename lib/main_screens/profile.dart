@@ -1,31 +1,53 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/customer_screens/address_book.dart';
 import 'package:multi_store_app/customer_screens/customer_orders.dart';
 import 'package:multi_store_app/customer_screens/wishlist.dart';
 import 'package:multi_store_app/main_screens/cart.dart';
+import 'package:multi_store_app/minor_screens/update_password.dart';
+import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/alert_dialog.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
-  final String documentId;
-  const ProfileScreen({Key? key, required this.documentId}) : super(key: key);
+  /* final String documentId; */
+  const ProfileScreen({Key? key /* , required this.documentId */})
+      : super(key: key);
 
   @override
-  _ProfileScreenState createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String? documentId;
   CollectionReference customers =
       FirebaseFirestore.instance.collection('customers');
   CollectionReference anonymous =
       FirebaseFirestore.instance.collection('anonymous');
+
+  @override
+  void initState() {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      if (user != null) {
+        print(user.uid);
+        setState(() {
+          documentId = user.uid;
+        });
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot>(
       future: FirebaseAuth.instance.currentUser!.isAnonymous
-          ? anonymous.doc(widget.documentId).get()
-          : customers.doc(widget.documentId).get(),
+          ? anonymous.doc(documentId).get()
+          : customers.doc(documentId).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
@@ -248,11 +270,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             title: 'Phone No.'),
                                         const YellowDivider(),
                                         RepeatedListTile(
-                                            icon: Icons.location_pin,
-                                            subTitle: data['address'] == ''
-                                                ? 'example : New Gersy - usa'
-                                                : data['address'],
-                                            title: 'Address'),
+                                          onPressed: FirebaseAuth.instance
+                                                  .currentUser!.isAnonymous
+                                              ? null
+                                              : () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const AddressBook()));
+                                                },
+                                          title: 'Address',
+                                          icon: Icons.location_pin,
+                                          subTitle: userAddress(data),
+                                          /*  data['address'] == ''
+                                              ? 'example : New Jersey - USA'
+                                              : data['address'], */
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -279,7 +313,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         RepeatedListTile(
                                           title: 'Change Password',
                                           icon: Icons.lock,
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const UpdatePassword()));
+                                          },
                                         ),
                                         const YellowDivider(),
                                         RepeatedListTile(
@@ -295,13 +335,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   Navigator.pop(context);
                                                 },
                                                 tabYes: () async {
-                                                  await FirebaseAuth.instance
-                                                      .signOut();
-                                                  Navigator.pop(context);
-                                                  Navigator
-                                                      .pushReplacementNamed(
-                                                          context,
-                                                          '/welcome_screen');
+                                                  await AuthRepo.logOut();
+
+                                                  await Future.delayed(
+                                                          const Duration(
+                                                              microseconds:
+                                                                  100))
+                                                      .whenComplete(() {
+                                                    Navigator.pop(context);
+                                                    Navigator
+                                                        .pushReplacementNamed(
+                                                            context,
+                                                            '/welcome_screen');
+                                                  });
                                                 });
                                           },
                                         ),
@@ -330,9 +376,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
       },
     );
   }
-}
 
-class AppbarBackButton {}
+  String userAddress(dynamic data) {
+    if (FirebaseAuth.instance.currentUser!.isAnonymous == true) {
+      return 'example: New Jersey - USA';
+    } else if (FirebaseAuth.instance.currentUser!.isAnonymous == false &&
+        data['address'] == '') {
+      return 'Set Your Address';
+    }
+    return data['address'];
+  }
+}
 
 class YellowDivider extends StatelessWidget {
   const YellowDivider({

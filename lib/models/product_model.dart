@@ -5,8 +5,11 @@ import 'package:multi_store_app/providers/wish_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
 
+import '../minor_screens/edit_products.dart';
+
 class ProductModel extends StatefulWidget {
   final dynamic products;
+
   const ProductModel({Key? key, required this.products}) : super(key: key);
 
   @override
@@ -73,7 +76,7 @@ class _ProductModelState extends State<ProductModel> {
                                       fontWeight: FontWeight.w600),
                                 ),
                                 Text(
-                                  widget.products['price'].toStringAsFixed(2),
+                                  (widget.products['price']).toStringAsFixed(2),
                                   style: onSale != 0
                                       ? const TextStyle(
                                           color: Colors.grey,
@@ -83,11 +86,11 @@ class _ProductModelState extends State<ProductModel> {
                                           fontWeight: FontWeight.w600)
                                       : const TextStyle(
                                           color: Colors.red,
-                                          fontSize: 16,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w600),
                                 ),
                                 const SizedBox(
-                                  width: 6,
+                                  width: 5,
                                 ),
                                 onSale != 0
                                     ? Text(
@@ -99,7 +102,7 @@ class _ProductModelState extends State<ProductModel> {
                                             .toStringAsFixed(2),
                                         style: const TextStyle(
                                             color: Colors.red,
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             fontWeight: FontWeight.w600),
                                       )
                                     : const Text(''),
@@ -108,7 +111,14 @@ class _ProductModelState extends State<ProductModel> {
                             widget.products['sid'] ==
                                     FirebaseAuth.instance.currentUser!.uid
                                 ? IconButton(
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => EditProduct(
+                                                    items: widget.products,
+                                                  )));
+                                    },
                                     icon: const Icon(
                                       Icons.edit,
                                       color: Colors.red,

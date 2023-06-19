@@ -22,7 +22,7 @@ class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
-  _WelcomeScreenState createState() => _WelcomeScreenState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
 class _WelcomeScreenState extends State<WelcomeScreen>
@@ -226,15 +226,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               onPresssed: () async {
                                 setState(() {
                                   processing = true;
-                                  if(processing){
-
-                                  }
                                 });
                                 await FirebaseAuth.instance
                                     .signInAnonymously()
                                     .whenComplete(() async {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/customer_home');
                                   _uid = FirebaseAuth.instance.currentUser!.uid;
                                   await anonymous.doc(_uid).set({
                                     'name': '',
@@ -244,9 +239,13 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                                     'address': '',
                                     'cid': _uid
                                   });
-                                 });
+                                });
 
-
+                                await Future.delayed(
+                                        const Duration(microseconds: 100))
+                                    .whenComplete(() =>
+                                        Navigator.pushReplacementNamed(
+                                            context, '/customer_home'));
                               },
                               child: const Icon(
                                 Icons.person,

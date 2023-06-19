@@ -34,7 +34,7 @@ class ElectronicsCategory extends StatelessWidget {
                           mainCategName: 'electronics',
                           subCategName: electronics[index + 1],
                           assetName: 'images/electronics/electronics$index.jpg',
-                          assetLabel: electronics[index + 1],
+                          subcategLabel: electronics[index + 1],
                         );
                       }),
                     ),

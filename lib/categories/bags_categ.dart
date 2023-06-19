@@ -34,7 +34,7 @@ class BagsCategory extends StatelessWidget {
                           mainCategName: 'bags',
                           subCategName: bags[index + 1],
                           assetName: 'images/bags/bags$index.jpg',
-                          assetLabel: bags[index + 1],
+                          subcategLabel: bags[index + 1],
                         );
                       }),
                     ),

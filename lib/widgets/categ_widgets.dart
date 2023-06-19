@@ -8,7 +8,7 @@ class SliderBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.8,
+      height: MediaQuery.of(context).size.height * 0.75,
       width: MediaQuery.of(context).size.width * 0.05,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40),
@@ -47,13 +47,14 @@ class SubcategModel extends StatelessWidget {
   final String mainCategName;
   final String subCategName;
   final String assetName;
-  final String assetLabel;
+  final String subcategLabel;
+
   const SubcategModel(
       {Key? key,
       required this.assetName,
       required this.mainCategName,
       required this.subCategName,
-      required this.assetLabel})
+      required this.subcategLabel})
       : super(key: key);
 
   @override
@@ -72,14 +73,14 @@ class SubcategModel extends StatelessWidget {
         children: [
           SizedBox(
             height: 70,
-            width: 70,
+            width: 60,
             child: Image(
               image: AssetImage(assetName),
             ),
           ),
           Text(
-            assetLabel,
-            style: const TextStyle(fontSize: 11),
+            subCategName,
+            style: const TextStyle(fontSize: 12),
           )
         ],
       ),

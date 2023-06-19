@@ -34,7 +34,7 @@ class WomenCategory extends StatelessWidget {
                           mainCategName: 'women',
                           subCategName: women[index + 1],
                           assetName: 'images/women/women$index.jpg',
-                          assetLabel: women[index + 1],
+                          subcategLabel: women[index + 1],
                         );
                       }),
                     ),

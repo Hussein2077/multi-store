@@ -5,7 +5,8 @@ import 'package:multi_store_app/dashboard_components/manage_products.dart';
 import 'package:multi_store_app/dashboard_components/supplier_balance.dart';
 import 'package:multi_store_app/dashboard_components/supplier_orders.dart';
 import 'package:multi_store_app/dashboard_components/supplier_statics.dart';
-import 'package:multi_store_app/main_screens/visit_store.dart';
+import 'package:multi_store_app/minor_screens/visit_store.dart';
+import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/alert_dialog.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
 
@@ -31,7 +32,7 @@ List<Widget> pages = [
   VisitStore(suppId: FirebaseAuth.instance.currentUser!.uid),
   const SupplierOrders(),
   const EditBusiness(),
-  const ManageProducts(),
+  ManageProducts(),
   const Balance(),
   const Statics()
 ];
@@ -59,10 +60,13 @@ class DashboardScreen extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     tabYes: () async {
-                      await FirebaseAuth.instance.signOut();
-                      Navigator.pop(context);
-                      Navigator.pushReplacementNamed(
-                          context, '/welcome_screen');
+                      await AuthRepo.logOut();
+                      await Future.delayed(const Duration(microseconds: 100))
+                          .whenComplete(() {
+                        Navigator.pop(context);
+                        Navigator.pushReplacementNamed(
+                            context, '/welcome_screen');
+                      });
                     });
               },
               icon: const Icon(

@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/main_screens/visit_store.dart';
+import 'package:multi_store_app/minor_screens/visit_store.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
 
 class StoresScreen extends StatefulWidget {
   const StoresScreen({Key? key}) : super(key: key);
 
   @override
-  _StoresScreenState createState() => _StoresScreenState();
+  State<StoresScreen> createState() => _StoresScreenState();
 }
 
 class _StoresScreenState extends State<StoresScreen> {
