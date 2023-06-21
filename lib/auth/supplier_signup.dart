@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
@@ -177,7 +178,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                 vertical: 20, horizontal: 40),
                             child: CircleAvatar(
                               radius: 60,
-                              backgroundColor: Colors.purpleAccent,
+                              backgroundColor: AppColor1.grey,
                               backgroundImage: _imageFile == null
                                   ? null
                                   : FileImage(File(_imageFile!.path)),
@@ -187,7 +188,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                             children: [
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: Colors.purple,
+                                    color: AppColor1.grey,
                                     borderRadius: BorderRadius.only(
                                         topLeft: Radius.circular(15),
                                         topRight: Radius.circular(15))),
@@ -206,7 +207,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                               ),
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: Colors.purple,
+                                    color: AppColor1.grey,
                                     borderRadius: BorderRadius.only(
                                         bottomLeft: Radius.circular(15),
                                         bottomRight: Radius.circular(15))),
@@ -239,6 +240,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Full Name',
                             hintText: 'Enter your Full Name',
+                            labelStyle: const TextStyle(color: AppColor1.black),
                           ),
                         ),
                       ),
@@ -262,6 +264,7 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
                             hintText: 'Enter your email',
+                            labelStyle: const TextStyle(color: AppColor1.black),
                           ),
                         ),
                       ),
@@ -286,13 +289,13 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                   });
                                 },
                                 icon: Icon(
-                                  passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Colors.purple,
-                                )),
+                                    passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: AppColor1.primaryColor)),
                             labelText: 'Password',
                             hintText: 'Enter your password',
+                            labelStyle: const TextStyle(color: AppColor1.black),
                           ),
                         ),
                       ),

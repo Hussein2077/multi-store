@@ -3,6 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/minor_screens/product_details.dart';
 
+import '../on_boarding/color.dart';
+
 class SearchScreen extends StatefulWidget {
   const SearchScreen({Key? key}) : super(key: key);
 
@@ -42,7 +44,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ? Center(
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.yellow,
+                    color: AppColor1.primaryColor,
                     borderRadius: BorderRadius.circular(25)),
                 height: 30,
                 width: MediaQuery.of(context).size.width * 0.7,
@@ -55,7 +57,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                       Text(
                         'Search for any thing ..',
-                        style: TextStyle(color: Colors.grey),
+                        style: TextStyle(color: Colors.white),
                       )
                     ]),
               ),

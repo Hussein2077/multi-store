@@ -10,6 +10,8 @@ import 'package:multi_store_app/galleries/shoes_gallery.dart';
 import 'package:multi_store_app/galleries/women_gallery.dart';
 import 'package:multi_store_app/widgets/fake_search.dart';
 
+import '../on_boarding/color.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -30,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: const FakeSearch(),
           bottom: const TabBar(
             isScrollable: true,
-            indicatorColor: Colors.yellow,
+            indicatorColor:   AppColor1.primaryColor,
             indicatorWeight: 8,
             tabs: [
               RepeatedTab(label: 'Men'),

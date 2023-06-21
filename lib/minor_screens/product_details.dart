@@ -5,6 +5,7 @@ import 'package:multi_store_app/main_screens/cart.dart';
 import 'package:multi_store_app/minor_screens/visit_store.dart';
 import 'package:multi_store_app/minor_screens/full_screen_view.dart';
 import 'package:multi_store_app/models/product_model.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:multi_store_app/providers/wish_provider.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
@@ -14,11 +15,12 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_grid_view.dart';
 import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 import 'package:provider/provider.dart';
 import 'package:collection/collection.dart';
-import 'package:badges/badges.dart'as badges;
+import 'package:badges/badges.dart' as badges;
 import 'package:expandable/expandable.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
   final dynamic proList;
+
   const ProductDetailsScreen({Key? key, required this.proList})
       : super(key: key);
 
@@ -86,7 +88,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             left: 15,
                             top: 20,
                             child: CircleAvatar(
-                              backgroundColor: Colors.yellow,
+                              backgroundColor: AppColor1.primaryColor,
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.arrow_back_ios_new,
@@ -101,7 +103,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                             right: 15,
                             top: 20,
                             child: CircleAvatar(
-                              backgroundColor: Colors.yellow,
+                              backgroundColor: AppColor1.primaryColor,
                               child: IconButton(
                                 icon: const Icon(
                                   Icons.share,
@@ -341,7 +343,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                                 padding: EdgeInsets.all(2),
                                 badgeColor: Colors.yellow,
                               ),
-
                               badgeContent: Text(
                                 context
                                     .watch<Cart>()
@@ -395,6 +396,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
 class ProDetailsHeader extends StatelessWidget {
   final String label;
+
   const ProDetailsHeader({Key? key, required this.label}) : super(key: key);
 
   @override

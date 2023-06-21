@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/minor_screens/place_order.dart';
 import 'package:multi_store_app/models/cart_model.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:multi_store_app/widgets/alert_dialog.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
@@ -77,7 +78,7 @@ class _CartScreenState extends State<CartScreen> {
                   height: 35,
                   width: MediaQuery.of(context).size.width * 0.45,
                   decoration: BoxDecoration(
-                      color: Colors.yellow,
+                      color: AppColor1.primaryColor,
                       borderRadius: BorderRadius.circular(25)),
                   child: MaterialButton(
                     onPressed: total == 0.0
@@ -89,7 +90,9 @@ class _CartScreenState extends State<CartScreen> {
                                     builder: (context) =>
                                         const PlaceOrderScreen()));
                           },
-                    child: const Text('CHECK OUT'),
+                    child: const Text('CHECK OUT',style: TextStyle(
+                      color: AppColor1.backgroundcolor
+                    ),),
                   ),
                 )
               ],

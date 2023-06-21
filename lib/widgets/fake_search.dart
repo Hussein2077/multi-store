@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/minor_screens/search.dart';
 
+import '../on_boarding/color.dart';
+
 class FakeSearch extends StatelessWidget {
   const FakeSearch({Key? key}) : super(key: key);
 
@@ -14,7 +16,7 @@ class FakeSearch extends StatelessWidget {
       child: Container(
         height: 35,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.yellow, width: 1.4),
+            border: Border.all( color: AppColor1.primaryColor, width: 1.4),
             borderRadius: BorderRadius.circular(25)),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -38,12 +40,12 @@ class FakeSearch extends StatelessWidget {
               height: 32,
               width: 75,
               decoration: BoxDecoration(
-                  color: Colors.yellow,
+                  color: AppColor1.primaryColor,
                   borderRadius: BorderRadius.circular(25)),
               child: const Center(
                 child: Text(
                   'Search',
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
             )

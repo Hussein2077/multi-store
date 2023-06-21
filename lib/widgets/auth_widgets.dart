@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../on_boarding/color.dart';
+
 class AuthMainButton extends StatelessWidget {
   final String mainButtonLabel;
   final Function() onPressed;
@@ -12,7 +14,7 @@ class AuthMainButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30),
       child: Material(
-        color: Colors.purple,
+          color: AppColor1.primaryColor,
         borderRadius: BorderRadius.circular(25),
         child: MaterialButton(
             minWidth: double.infinity,
@@ -47,14 +49,14 @@ class HaveAccount extends StatelessWidget {
       children: [
         Text(
           haveAccount,
-          style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic),
+          style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: AppColor1.black),
         ),
         TextButton(
             onPressed: onPressed,
             child: Text(
               actionLabel,
               style: const TextStyle(
-                  color: Colors.purple,
+                  color: AppColor1.primaryColor,
                   fontWeight: FontWeight.bold,
                   fontSize: 20),
             ))
@@ -98,10 +100,10 @@ var textFormDecoration = InputDecoration(
   hintText: 'Enter your full name',
   border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
   enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.purple, width: 1),
+      borderSide: const BorderSide( color: AppColor1.black, width: 1),
       borderRadius: BorderRadius.circular(25)),
   focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide(color: Colors.deepPurpleAccent, width: 2),
+      borderSide: const BorderSide( color: AppColor1.primaryColor, width: 2),
       borderRadius: BorderRadius.circular(25)),
 );
 

@@ -11,7 +11,7 @@ import 'package:multi_store_app/utilities/routes.dart';
 Map<String, Widget Function(BuildContext context)> routes = {
   //auth
   AppRoutes.welcomeScreen:(context)=>const WelcomeScreen(),
-  AppRoutes.customerHomeScreen:(context)=>const CustomerHomeScreen(),
+  AppRoutes.customerHomeScreen:(context)=> CustomerHomeScreen(),
   AppRoutes.supplierHomeScreen:(context)=>const SupplierHomeScreen(),
   AppRoutes.customerRegister:(context)=>const CustomerRegister(),
   AppRoutes.customerLogin:(context)=>const CustomerRegister(),

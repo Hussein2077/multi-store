@@ -7,6 +7,8 @@ import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:multi_store_app/widgets/yellow_button.dart';
 
+import '../on_boarding/color.dart';
+
 class SupplierLogin extends StatefulWidget {
   const SupplierLogin({Key? key}) : super(key: key);
 
@@ -21,8 +23,8 @@ class _SupplierLoginState extends State<SupplierLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
-  bool passwordVisible = false;
-  bool sendEmailVeridication = false;
+  bool passwordVisible = true;
+  bool sendEmailVerification = false;
 
   void logIn() async {
     setState(() {
@@ -45,7 +47,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
               _scaffoldKey, 'please check your inbox');
           setState(() {
             processing = false;
-            sendEmailVeridication = true;
+            sendEmailVerification = true;
           });
         }
       } on FirebaseAuthException catch (e) {
@@ -83,7 +85,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
                       const AuthHeaderLabel(headerLabel: 'Log In'),
                       SizedBox(
                         height: 50,
-                        child: sendEmailVeridication == true
+                        child: sendEmailVerification == true
                             ? Center(
                                 child: YellowButton(
                                     label: 'Resend Email Verification',
@@ -97,7 +99,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
                                       Future.delayed(const Duration(seconds: 3))
                                           .whenComplete(() {
                                         setState(() {
-                                          sendEmailVeridication = false;
+                                          sendEmailVerification = false;
                                         });
                                       });
                                     },
@@ -125,6 +127,9 @@ class _SupplierLoginState extends State<SupplierLogin> {
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
                             hintText: 'Enter your email',
+                            labelStyle: const TextStyle(
+                              color: AppColor1.black,
+                            ),
                           ),
                         ),
                       ),
@@ -152,10 +157,13 @@ class _SupplierLoginState extends State<SupplierLogin> {
                                   passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Colors.purple,
+                                  color: AppColor1.primaryColor,
                                 )),
                             labelText: 'Password',
                             hintText: 'Enter your password',
+                            labelStyle: const TextStyle(
+                              color: AppColor1.black,
+                            ),
                           ),
                         ),
                       ),
@@ -170,8 +178,10 @@ class _SupplierLoginState extends State<SupplierLogin> {
                           child: const Text(
                             'Forget Password ?',
                             style: TextStyle(
-                                fontSize: 18, fontStyle: FontStyle.italic),
-                          )),
+                                fontSize: 18, fontStyle: FontStyle.italic,
+                              color: AppColor1.black,
+                            ),),
+                          ),
                       HaveAccount(
                         haveAccount: 'Don\'t Have Account? ',
                         actionLabel: 'Sign Up',

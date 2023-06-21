@@ -8,6 +8,7 @@ import 'package:multi_store_app/customer_screens/customer_orders.dart';
 import 'package:multi_store_app/customer_screens/wishlist.dart';
 import 'package:multi_store_app/main_screens/cart.dart';
 import 'package:multi_store_app/minor_screens/update_password.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/alert_dialog.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
@@ -71,7 +72,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   height: 230,
                   decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                          colors: [Colors.yellow, Colors.brown])),
+                          colors: [AppColor1.primaryColor, AppColor1.grey])),
                 ),
                 CustomScrollView(
                   slivers: [
@@ -94,9 +95,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ),
                             ),
                             background: Container(
-                              decoration: const BoxDecoration(
+                              decoration:  const BoxDecoration(
                                   gradient: LinearGradient(
-                                      colors: [Colors.yellow, Colors.brown])),
+                                      colors: [ AppColor1.primaryColor, AppColor1.grey])),
                               child: Padding(
                                 padding:
                                     const EdgeInsets.only(top: 25, left: 30),
@@ -146,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 Container(
                                   decoration: const BoxDecoration(
-                                      color: Colors.black54,
+                                      color: AppColor1.grey,
                                       borderRadius: BorderRadius.only(
                                           topLeft: Radius.circular(30),
                                           bottomLeft: Radius.circular(30))),
@@ -159,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Cart',
                                           style: TextStyle(
-                                              color: Colors.yellow,
+                                              color: AppColor1.backgroundcolor,
                                               fontSize: 20),
                                         ),
                                       ),
@@ -176,7 +177,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Container(
-                                  color: Colors.yellow,
+                                  
+                                  decoration: const BoxDecoration(
+                                    color: AppColor1.primaryColor,
+                                  ),
                                   child: TextButton(
                                     child: SizedBox(
                                       height: 40,
@@ -186,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Orders',
                                           style: TextStyle(
-                                              color: Colors.black54,
+                                              color: AppColor1.backgroundcolor,
                                               fontSize: 20),
                                         ),
                                       ),
@@ -202,7 +206,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 ),
                                 Container(
                                   decoration: const BoxDecoration(
-                                      color: Colors.black54,
+                                      color: AppColor1.grey,
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(30),
                                           bottomRight: Radius.circular(30))),
@@ -215,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Wishlist',
                                           style: TextStyle(
-                                              color: Colors.yellow,
+                                              color: AppColor1.backgroundcolor,
                                               fontSize: 20),
                                         ),
                                       ),
@@ -398,7 +402,7 @@ class YellowDivider extends StatelessWidget {
     return const Padding(
       padding: EdgeInsets.symmetric(horizontal: 40),
       child: Divider(
-        color: Colors.yellow,
+        color: AppColor1.primaryColor,
         thickness: 1,
       ),
     );

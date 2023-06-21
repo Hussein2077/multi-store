@@ -2,21 +2,17 @@ import 'package:badges/badges.dart'as badges;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:multi_store_app/main_screens/category.dart';
 import 'package:multi_store_app/main_screens/dashboard.dart';
 import 'package:multi_store_app/main_screens/home.dart';
 import 'package:multi_store_app/main_screens/stores.dart';
 import 'package:multi_store_app/main_screens/upload_product.dart';
+import 'package:multi_store_app/providers/nav_bar_suppliers_controller.dart';
 
-class SupplierHomeScreen extends StatefulWidget {
+class SupplierHomeScreen extends StatelessWidget {
   const SupplierHomeScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SupplierHomeScreen> createState() => _SupplierHomeScreenState();
-}
-
-class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
-  int _selectedIndex = 0;
   final List<Widget> tabs = const [
     HomeScreen(),
     CategoryScreen(),
@@ -27,6 +23,7 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(SupplierControllerImplement());
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('orders')
@@ -42,14 +39,16 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
             );
           }
 
-          return Scaffold(
-            body: tabs[_selectedIndex],
+          return GetBuilder<SupplierControllerImplement>(
+              init: SupplierControllerImplement(),
+              builder: (controller)=>Scaffold(
+            body: tabs[controller.selectedIndex],
             bottomNavigationBar: BottomNavigationBar(
               elevation: 0,
               type: BottomNavigationBarType.fixed,
               selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
               selectedItemColor: Colors.black,
-              currentIndex: _selectedIndex,
+              currentIndex: controller.selectedIndex,
               items: [
                 const BottomNavigationBarItem(
                   icon: Icon(Icons.home),
@@ -85,12 +84,10 @@ class _SupplierHomeScreenState extends State<SupplierHomeScreen> {
                 ),
               ],
               onTap: (index) {
-                setState(() {
-                  _selectedIndex = index;
-                });
+               controller.next(index);
               },
             ),
-          );
+          ));
         });
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
+import '../on_boarding/color.dart';
+
 class YellowButton extends StatelessWidget {
   final String label;
   final Function() onPressed;
   final double width;
+
   const YellowButton(
       {Key? key,
       required this.label,
@@ -17,11 +20,16 @@ class YellowButton extends StatelessWidget {
       height: 35,
       width: MediaQuery.of(context).size.width * width,
       decoration: BoxDecoration(
-          color: Colors.yellow, borderRadius: BorderRadius.circular(25)),
+        color:AppColor1.primaryColor,
+        borderRadius: BorderRadius.circular(25),
+      ),
       child: MaterialButton(
         onPressed: onPressed,
         child: Text(
           label,
+          style: const TextStyle(
+            color: AppColor1.backgroundcolor
+          ),
         ),
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 
 class AppBarBackButton extends StatelessWidget {
   const AppBarBackButton({
@@ -29,7 +30,7 @@ class YellowBackButton extends StatelessWidget {
     return IconButton(
       icon: const Icon(
         Icons.arrow_back_ios_new,
-        color: Colors.yellow,
+        color: AppColor1.black,
       ),
       onPressed: () {
         Navigator.pop(context);

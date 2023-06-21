@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:multi_store_app/minor_screens/forgot_password.dart';
+import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
@@ -73,7 +75,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey =
       GlobalKey<ScaffoldMessengerState>();
-  bool passwordVisible = false;
+  bool passwordVisible = true;
 
   void navigate() {
     Navigator.pushReplacementNamed(context, '/customer_home');
@@ -150,10 +152,12 @@ class _CustomerLoginState extends State<CustomerLogin> {
                           onChanged: (value) {
                             email = value;
                           },
+
                           keyboardType: TextInputType.emailAddress,
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Email Address',
                             hintText: 'Enter your email',
+
                           ),
                         ),
                       ),
@@ -181,7 +185,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
                                   passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Colors.purple,
+                                  color: AppColor1.primaryColor,
                                 )),
                             labelText: 'Password',
                             hintText: 'Enter your password',
@@ -196,10 +200,12 @@ class _CustomerLoginState extends State<CustomerLogin> {
                                     builder: (context) =>
                                         const ForgotPassword()));
                           },
-                          child: const Text(
+                          child:  const Text(
                             'Forget Password ?',
                             style: TextStyle(
-                                fontSize: 18, fontStyle: FontStyle.italic),
+                              fontWeight: FontWeight.bold,
+                              color: AppColor1.primaryColor
+                            ),
                           )),
                       HaveAccount(
                         haveAccount: 'Don\'t Have Account? ',
@@ -212,7 +218,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
                       processing == true
                           ? const Center(
                               child: CircularProgressIndicator(
-                              color: Colors.purple,
+                                  color: AppColor1.primaryColor
                             ))
                           : AuthMainButton(
                               mainButtonLabel: 'Log In',
