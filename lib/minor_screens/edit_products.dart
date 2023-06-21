@@ -48,7 +48,7 @@ class _EditProductState extends State<EditProduct> {
       final pickedImages = await _picker.pickMultiImage(
           maxHeight: 300, maxWidth: 300, imageQuality: 95);
       setState(() {
-        imagesFileList = pickedImages!;
+        imagesFileList = pickedImages;
       });
     } catch (e) {
       setState(() {

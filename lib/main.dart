@@ -1,18 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:multi_store_app/auth/customer_login.dart';
-import 'package:multi_store_app/auth/customer_signup.dart';
-import 'package:multi_store_app/auth/supplier_login.dart';
-import 'package:multi_store_app/auth/supplier_signup.dart';
+import 'package:get/get.dart';
 import 'package:multi_store_app/firebase_options.dart';
-import 'package:multi_store_app/main_screens/customer_home.dart';
-import 'package:multi_store_app/main_screens/onboarding_screen.dart';
-import 'package:multi_store_app/main_screens/supplier_home.dart';
-import 'package:multi_store_app/main_screens/welcome_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:multi_store_app/providers/stripe.dart';
 import 'package:multi_store_app/providers/wish_provider.dart';
+import 'package:multi_store_app/utilities/app_routes.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -36,19 +30,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
+
       debugShowCheckedModeBanner: false,
-      initialRoute: '/welcome_screen',
-      routes: {
-        '/welcome_screen': (context) => const WelcomeScreen(),
-        '/onboarding_screen': (context) => const Onboardingscreen(),
-        '/customer_home': (context) => const CustomerHomeScreen(),
-        '/supplier_home': (context) => const SupplierHomeScreen(),
-        '/customer_signup': (context) => const CustomerRegister(),
-        '/customer_login': (context) => const CustomerLogin(),
-        '/supplier_signup': (context) => const SupplierRegister(),
-        '/supplier_login': (context) => const SupplierLogin(),
-      },
+      initialRoute: '/onBoarding',
+      routes: routes
     );
   }
 }
