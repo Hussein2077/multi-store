@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
+import 'package:multi_store_app/widgets/custom_text_field.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -131,6 +132,9 @@ class _CustomerRegisterState extends State<CustomerRegister> {
 
   @override
   Widget build(BuildContext context) {
+
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return ScaffoldMessenger(
       key: _scaffoldKey,
       child: Scaffold(
@@ -145,9 +149,19 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      const AuthHeaderLabel(headerLabel: 'Sign Up'),
+                      const Text(
+                        'Sign up to continue',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      SizedBox(
+                        height: h * .0142,
+                      ),
                       Row(
                         children: [
+
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 40),
@@ -200,9 +214,11 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                           )
                         ],
                       ),
+
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
+                        child: CustomTextField(
+                          keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'please enter your full name';
@@ -212,15 +228,15 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                           onChanged: (value) {
                             name = value;
                           },
-                          decoration: textFormDecoration.copyWith(
-                            labelText: 'Full Name',
-                            hintText: 'Enter your Full Name',
-                          ),
+                          hintText: 'Enter your Full Name',
+                          obscureText: false,
+                          prefixIcon: const Icon(Icons.person),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
+                        child: CustomTextField(
+                          keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'please enter your email ';
@@ -231,19 +247,17 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                             }
                             return null;
                           },
-                          onChanged: (value) {
-                            email = value;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: textFormDecoration.copyWith(
-                            labelText: 'Email Address',
-                            hintText: 'Enter your email',
-                          ),
+                          hintText: 'Enter your Email',
+                          obscureText: false,
+                          prefixIcon: const Icon(Icons.email_outlined),  onChanged: (value) {
+                          email = value;
+                        },
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
+                        child: CustomTextField(
+                          keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'please enter your password';
@@ -254,24 +268,25 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                             password = value;
                           },
                           obscureText: passwordVisible,
-                          decoration: textFormDecoration.copyWith(
-                            suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    passwordVisible = !passwordVisible;
-                                  });
-                                },
-                                icon: Icon(
-                                  passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: AppColor1.primaryColor,
-                                )),
-                            labelText: 'Password',
-                            hintText: 'Enter your password',
-                          ),
+                          hintText: 'Enter your Password',
+
+                          prefixIcon: const Icon(Icons.lock_outline),
+                          suffixIcon: IconButton(
+                              onPressed: () {
+                                setState(() {
+                                  passwordVisible = !passwordVisible;
+                                });
+                              },
+                              icon: Icon(
+                                passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: AppColor1.primaryColor,
+                              )),
+
                         ),
                       ),
+
                       HaveAccount(
                         haveAccount: 'already have account? ',
                         actionLabel: 'Log In',

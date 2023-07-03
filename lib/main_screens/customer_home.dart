@@ -36,7 +36,8 @@ class CustomerHomeScreen extends StatelessWidget {
             elevation: 0,
             type: BottomNavigationBarType.fixed,
             selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
-            selectedItemColor: Colors.black,
+            selectedItemColor: AppColor1.primaryColor,
+
             currentIndex: controller.selectedIndex,
             items: [
               const BottomNavigationBarItem(

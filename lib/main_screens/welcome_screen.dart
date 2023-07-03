@@ -319,73 +319,134 @@
 //   }
 // }
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:multi_store_app/auth/customer_login.dart';
-import 'package:multi_store_app/on_boarding/color.dart';
-import 'package:multi_store_app/on_boarding/imageassets.dart';
-import 'package:multi_store_app/utilities/routes.dart';
-import 'package:multi_store_app/widgets/my_auth_button.dart';
 
+import 'package:multi_store_app/on_boarding/color.dart';
+
+
+import '../auth/customer_login.dart';
+import '../widgets/custom_botton.dart';
+
+// class WelcomeScreen extends StatelessWidget {
+//   const WelcomeScreen({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       // appBar: AppBar(
+//       //   backgroundColor: AppColor1.black,
+//       //   elevation: 0,
+//       // ),
+//       body: Column(
+//         children: [
+//           Image.asset(
+//             AppImageAsset.welcomeScreenImage,
+//           ),
+//           Expanded(
+//             child: Container(
+//               width: double.infinity,
+//               color: AppColor1.backgroundcolor,
+//               child: Column(
+//                 children: [
+//                   const SizedBox(
+//                     height: 50,
+//                   ),
+//                   MyButton(
+//                     onPressed: () {
+//                       Navigator.pushReplacement<void, void>(
+//                         context,
+//                         MaterialPageRoute<void>(
+//                           builder: (BuildContext context) => const CustomerLogin(),
+//                         ),
+//                       );
+//                     },
+//                     buttonText: 'Login',
+//                     color: AppColor1.black,
+//                     textColor: AppColor1.backgroundcolor,
+//                   ),
+//                   const SizedBox(
+//                     height: 30,
+//                   ),
+//                   MyButton(
+//                     onPressed: () {
+//                       Navigator.pushReplacementNamed(context, AppRoutes.supplierRegister);
+//                     },
+//                     buttonText: 'Register as a Seller',
+//                     color: AppColor1.primaryColor,
+//                     textColor: Colors.white,
+//                   )
+//                 ],
+//               ),
+//             ),
+//           ),
+//           // Container(
+//           //   height: MediaQuery.of(context).size.height * .52,
+//           //   color: Colors.black,
+//           // )
+//         ],
+//       ),
+//     );
+//   }
+// }
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        // appBar: AppBar(
-        //   backgroundColor: AppColor1.black,
-        //   elevation: 0,
-        // ),
-        body: Column(
+    double h = MediaQuery.of(context).size.height;
+    // double w = MediaQuery.of(context).size.width;
+    return Scaffold(
+
+      body: Center(
+        child: Column(
           children: [
-            Image.asset(
-              AppImageAsset.welcomeScreenImage,
-            ),
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                color: AppColor1.backgroundcolor,
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    MyButton(
-                      onPressed: () {
-                        Navigator.pushReplacement<void, void>(
-                          context,
-                          MaterialPageRoute<void>(
-                            builder: (BuildContext context) => const CustomerLogin(),
-                          ),
-                        );
-                      },
-                      buttonText: 'Login',
-                      color: AppColor1.black,
-                      textColor: AppColor1.backgroundcolor,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    MyButton(
-                      onPressed: () {
-                        Navigator.pushReplacementNamed(context, AppRoutes.supplierRegister);
-                      },
-                      buttonText: 'Register as a Seller',
-                      color: AppColor1.primaryColor,
-                      textColor: Colors.white,
-                    )
-                  ],
+            SizedBox(height: h*.39),
+
+            SizedBox(height: h*.27),
+            CustomButton(label: 'Login as Customer',onTap: (){
+              // Get.toNamed(AppRoutes.login);
+              Navigator.pushReplacement<void, void>(
+                context,
+                MaterialPageRoute<void>(
+                  builder: (BuildContext context) => const CustomerLogin(),
                 ),
-              ),
-            ),
-            // Container(
-            //   height: MediaQuery.of(context).size.height * .52,
-            //   color: Colors.black,
-            // )
+              );
+            },),
+            SizedBox(height: h*.01),
+            customSignUp(context),
           ],
         ),
       ),
     );
   }
+}
+
+Widget customSignUp(BuildContext context) {
+  return InkWell(
+    onTap: () {
+      Navigator.pushReplacement<void, void>(
+        context,
+        MaterialPageRoute<void>(
+          builder: (BuildContext context) => const CustomerLogin(),
+        ),
+      );
+    },
+    child: Container(
+      height: 43,
+      width: 282,
+      decoration: BoxDecoration(
+          color: AppColor1.backgroundColor,
+          borderRadius: BorderRadius.circular(10),
+          border: Border.all(color: AppColor1.primaryColor)),
+      child: const Center(
+        child: Text(
+          'Sign up as a Supplier',
+          style: TextStyle(
+            fontSize: 16,
+            color: AppColor1.primaryColor,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      ),
+    ),
+  );
 }

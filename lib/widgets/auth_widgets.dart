@@ -11,22 +11,26 @@ class AuthMainButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30),
-      child: Material(
-          color: AppColor1.primaryColor,
-        borderRadius: BorderRadius.circular(25),
-        child: MaterialButton(
-            minWidth: double.infinity,
-            onPressed: onPressed,
-            child: Text(
-              mainButtonLabel,
-              style: const TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white),
-            )),
+    return Container(
+      height: 43,
+      width: 282,
+      decoration:  BoxDecoration(
+        color: AppColor1.primaryColor,
+        borderRadius: BorderRadius.circular(16),
+
       ),
+      // padding: const EdgeInsets.symmetric(vertical: 30),
+      child: MaterialButton(
+          // minWidth: double.infinity,
+          onPressed: onPressed,
+          child: Text(
+            mainButtonLabel,
+            style: const TextStyle(
+              fontSize: 16,
+              color: AppColor1.backgroundColor,
+              fontWeight: FontWeight.w600,
+            ),
+          )),
     );
   }
 }
@@ -45,20 +49,18 @@ class HaveAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
           haveAccount,
-          style: const TextStyle(fontSize: 16, fontStyle: FontStyle.italic, color: AppColor1.black),
-        ),
+          style: const TextStyle(
+              fontSize: 12, fontWeight: FontWeight.w500),        ),
         TextButton(
             onPressed: onPressed,
             child: Text(
               actionLabel,
-              style: const TextStyle(
-                  color: AppColor1.primaryColor,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20),
+              style: const TextStyle(color: AppColor1.primaryColor),
+
             ))
       ],
     );
@@ -96,15 +98,34 @@ class AuthHeaderLabel extends StatelessWidget {
 }
 
 var textFormDecoration = InputDecoration(
-  labelText: 'Full Name',
+  prefixIcon: const Icon(Icons.email_outlined),
+  prefixIconColor: AppColor1.primaryColor,
+  suffixIconColor: AppColor1.primaryColor,
   hintText: 'Enter your full name',
-  border: OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
+  hintStyle:
+  const TextStyle(fontSize: 14, fontWeight: FontWeight.w500,color: Colors.grey),
+  contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+  border: OutlineInputBorder(
+    borderSide: const BorderSide(
+        color: Colors.white,
+        width: .15
+    ),
+    borderRadius: BorderRadius.circular(16),
+  ),
   enabledBorder: OutlineInputBorder(
-      borderSide: const BorderSide( color: AppColor1.black, width: 1),
-      borderRadius: BorderRadius.circular(25)),
+    borderSide: const BorderSide(
+        color: Colors.white,
+        width: .15
+    ),
+    borderRadius: BorderRadius.circular(16),
+  ),
   focusedBorder: OutlineInputBorder(
-      borderSide: const BorderSide( color: AppColor1.primaryColor, width: 2),
-      borderRadius: BorderRadius.circular(25)),
+    borderSide: const BorderSide(
+        color: Colors.white,
+        width: .15
+    ),
+    borderRadius: BorderRadius.circular(16),
+  ),
 );
 
 extension EmailValidator on String {

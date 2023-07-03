@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 
 class SupplierOrderModel extends StatelessWidget {
   final dynamic order;
@@ -145,19 +144,19 @@ class SupplierOrderModel extends StatelessWidget {
                                 order['deliverystatus'] == 'preparing'
                                     ? TextButton(
                                         onPressed: () {
-                                          DatePicker.showDatePicker(context,
-                                              minTime: DateTime.now(),
-                                              maxTime: DateTime.now().add(
-                                                  const Duration(days: 365)),
-                                              onConfirm: (date) async {
-                                            await FirebaseFirestore.instance
-                                                .collection('orders')
-                                                .doc(order['orderid'])
-                                                .update({
-                                              'deliverystatus': 'shipping',
-                                              'deliverydate': date,
-                                            });
-                                          });
+                                          // DatePicker.showDatePicker(context,
+                                          //     minTime: DateTime.now(),
+                                          //     maxTime: DateTime.now().add(
+                                          //         const Duration(days: 365)),
+                                          //     onConfirm: (date) async {
+                                          //   await FirebaseFirestore.instance
+                                          //       .collection('orders')
+                                          //       .doc(order['orderid'])
+                                          //       .update({
+                                          //     'deliverystatus': 'shipping',
+                                          //     'deliverydate': date,
+                                          //   });
+                                          // });
                                         },
                                         child: const Text('shipping ?'))
                                     : TextButton(

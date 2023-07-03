@@ -91,7 +91,7 @@ class _CartScreenState extends State<CartScreen> {
                                         const PlaceOrderScreen()));
                           },
                     child: const Text('CHECK OUT',style: TextStyle(
-                      color: AppColor1.backgroundcolor
+                      color: AppColor1.backgroundColor
                     ),),
                   ),
                 )
@@ -123,7 +123,7 @@ class EmptyCart extends StatelessWidget {
             height: 50,
           ),
           Material(
-            color: Colors.lightBlueAccent,
+            color: AppColor1.primaryColor,
             borderRadius: BorderRadius.circular(25),
             child: MaterialButton(
               minWidth: MediaQuery.of(context).size.width * 0.6,

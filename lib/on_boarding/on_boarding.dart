@@ -16,7 +16,7 @@ class OnBoarding extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(OnBoardingControllerImplement()) ;
     return Scaffold(
-        backgroundColor: AppColor1.backgroundcolor,
+        backgroundColor: AppColor1.backgroundColor,
         body: SafeArea(
           child: SizedBox(
             height: MediaQuery.of(context).size.height*.98,

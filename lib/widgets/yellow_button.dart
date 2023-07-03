@@ -28,7 +28,7 @@ class YellowButton extends StatelessWidget {
         child: Text(
           label,
           style: const TextStyle(
-            color: AppColor1.backgroundcolor
+            color: AppColor1.backgroundColor
           ),
         ),
       ),

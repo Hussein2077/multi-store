@@ -160,7 +160,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Cart',
                                           style: TextStyle(
-                                              color: AppColor1.backgroundcolor,
+                                              color: AppColor1.backgroundColor,
                                               fontSize: 20),
                                         ),
                                       ),
@@ -190,7 +190,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Orders',
                                           style: TextStyle(
-                                              color: AppColor1.backgroundcolor,
+                                              color: AppColor1.backgroundColor,
                                               fontSize: 20),
                                         ),
                                       ),
@@ -219,7 +219,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Wishlist',
                                           style: TextStyle(
-                                              color: AppColor1.backgroundcolor,
+                                              color: AppColor1.backgroundColor,
                                               fontSize: 20),
                                         ),
                                       ),

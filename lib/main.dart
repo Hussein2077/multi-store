@@ -7,6 +7,7 @@ import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:multi_store_app/providers/stripe.dart';
 import 'package:multi_store_app/providers/wish_provider.dart';
 import 'package:multi_store_app/utilities/app_routes.dart';
+import 'package:multi_store_app/utilities/routes.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
 
       debugShowCheckedModeBanner: false,
-      initialRoute: '/onBoarding',
+      initialRoute: AppRoutes.customerLogin,
       routes: routes
     );
   }

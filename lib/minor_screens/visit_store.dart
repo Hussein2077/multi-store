@@ -156,10 +156,10 @@ final String suppId;
                                 },
                                 child: controller.following==true
                                     ? const Text('following',style: TextStyle(
-                                  color: AppColor1.backgroundcolor,
+                                  color: AppColor1.backgroundColor,
                                 ),)
                                     : const Text('FOLLOW',style: TextStyle(
-                                  color: AppColor1.backgroundcolor,
+                                  color: AppColor1.backgroundColor,
                                 ),),
                               ))
                         ],
