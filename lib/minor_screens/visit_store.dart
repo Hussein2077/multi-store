@@ -125,10 +125,10 @@ final String suppId;
                                               data: data,
                                             )));
                                   },
-                                  child: Row(
+                                  child: const Row(
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
-                                    children: const [
+                                    children: [
                                       Text('Edit',style: TextStyle(
                                         color: AppColor1.primaryColor,
                                       ),),

@@ -65,6 +65,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return /* Text("Full Name: ${data['full_name']} ${data['last_name']}"); */
 
               Scaffold(
+
             backgroundColor: Colors.grey.shade300,
             body: Stack(
               children: [
@@ -77,6 +78,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 CustomScrollView(
                   slivers: [
                     SliverAppBar(
+                      automaticallyImplyLeading: false
+                      ,
                       centerTitle: true,
                       pinned: true,
                       elevation: 0,
@@ -177,7 +180,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Container(
-                                  
+
                                   decoration: const BoxDecoration(
                                     color: AppColor1.primaryColor,
                                   ),

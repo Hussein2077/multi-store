@@ -22,7 +22,8 @@ class OnBoardingControllerImplement extends OnBoardingController {
       Get.offAllNamed(AppRoutes.welcomeScreen);
     } else {
       pageController.animateToPage(currentPage,
-          duration: const Duration(microseconds: 400), curve: Curves.easeIn);
+          duration: const Duration(microseconds: 800),
+          curve: Curves.easeInCubic);
     }
   }
 

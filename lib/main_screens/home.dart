@@ -22,14 +22,18 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    // double w = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length: 9,
       child: Scaffold(
         backgroundColor: Colors.blueGrey.shade100.withOpacity(0.5),
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           elevation: 0,
           backgroundColor: Colors.white,
           title: const FakeSearch(),
+centerTitle: true,
           bottom: const TabBar(
             isScrollable: true,
             indicatorColor:   AppColor1.primaryColor,

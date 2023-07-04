@@ -149,16 +149,12 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      const Text(
-                        'Sign up to continue',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      logo(h*.15),
                       SizedBox(
-                        height: h * .0142,
+                        height: h * .01,
                       ),
+
+
                       Row(
                         children: [
 

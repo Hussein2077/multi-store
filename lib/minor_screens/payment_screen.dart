@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:multi_store_app/providers/cart_provider.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
 import 'package:multi_store_app/widgets/yellow_button.dart';
@@ -13,12 +14,15 @@ import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:sn_progress_dialog/sn_progress_dialog.dart';
 
+import '../providers/payment_controller.dart';
+
 //import 'package:http/http.dart' as http;
 
 class PaymentScreen extends StatefulWidget {
   final String name;
   final String phone;
   final String address;
+
   const PaymentScreen(
       {Key? key,
       required this.name,
@@ -31,7 +35,7 @@ class PaymentScreen extends StatefulWidget {
 }
 
 class _PaymentScreenState extends State<PaymentScreen> {
-  int selectedValue = 1;
+
   late String orderId;
   CollectionReference customers =
       FirebaseFirestore.instance.collection('customers');
@@ -43,6 +47,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(PaymentControllerImplement());
     double totalPrice = context.watch<Cart>().totalPrice;
     double totalPaid = context.watch<Cart>().totalPrice + 10.0;
     return FutureBuilder<DocumentSnapshot>(
@@ -69,7 +74,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
             return Material(
               color: Colors.grey.shade200,
               child: SafeArea(
-                child: Scaffold(
+                child:GetBuilder<PaymentControllerImplement>(
+                  init: PaymentControllerImplement(),
+                  builder:(controller)=> Scaffold(
                   backgroundColor: Colors.grey.shade200,
                   appBar: AppBar(
                     elevation: 0,
@@ -130,10 +137,10 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                     ),
                                   ],
                                 ),
-                                Row(
+                                const Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     Text(
                                       'Shipping Coast',
                                       style: TextStyle(
@@ -162,27 +169,23 @@ class _PaymentScreenState extends State<PaymentScreen> {
                               children: [
                                 RadioListTile(
                                   value: 1,
-                                  groupValue: selectedValue,
+                                  groupValue: controller.selectedValue,
                                   onChanged: (int? value) {
-                                    setState(() {
-                                      selectedValue = value!;
-                                    });
+                                    controller.change(value);
                                   },
                                   title: const Text('Cash On Delivery'),
                                   subtitle: const Text('Pay Cash At Home'),
                                 ),
                                 RadioListTile(
                                   value: 2,
-                                  groupValue: selectedValue,
+                                  groupValue: controller.selectedValue,
                                   onChanged: (int? value) {
-                                    setState(() {
-                                      selectedValue = value!;
-                                    });
+                                    controller.change(value);
                                   },
                                   title:
                                       const Text('Pay via visa / Master Card'),
-                                  subtitle: Row(
-                                    children: const [
+                                  subtitle: const Row(
+                                    children: [
                                       Icon(Icons.payment, color: Colors.blue),
                                       Padding(
                                         padding: EdgeInsets.symmetric(
@@ -198,15 +201,16 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 ),
                                 RadioListTile(
                                   value: 3,
-                                  groupValue: selectedValue,
+                                  groupValue: controller.selectedValue,
                                   onChanged: (int? value) {
-                                    setState(() {
-                                      selectedValue = value!;
-                                    });
+                                    // setState(() {
+                                    //   selectedValue = value!;
+                                    // });
+                                    controller.change(value);
                                   },
                                   title: const Text('Pay via Paypal'),
-                                  subtitle: Row(
-                                    children: const [
+                                  subtitle: const Row(
+                                    children: [
                                       Icon(
                                         FontAwesomeIcons.paypal,
                                         color: Colors.blue,
@@ -234,7 +238,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                         label: 'Confirm ${totalPaid.toStringAsFixed(2)} USD',
                         width: 1,
                         onPressed: () async {
-                          if (selectedValue == 1) {
+                          if (controller.selectedValue == 1) {
                             showModalBottomSheet(
                                 context: context,
                                 builder: (context) => SizedBox(
@@ -344,14 +348,15 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                             ]),
                                       ),
                                     ));
-                          } else if (selectedValue == 2) {
+                          } else if (controller.selectedValue == 2) {
+
                             print('visa');
-/* 
-                            int payment = totalPaid.round();
+
+                         int payment = totalPaid.round();
                             int pay = payment * 100;
 
-                            await makePayment(data, pay.toString()); */
-                          } else if (selectedValue == 3) {
+                            await controller.makePayment(data, pay.toString());
+                          } else if (controller.selectedValue == 3) {
                             print('paypal');
                           }
                         },
@@ -360,7 +365,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   ),
                 ),
               ),
-            );
+            ));
           }
           return const Center(
             child: CircularProgressIndicator(),
@@ -368,7 +373,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
         });
   }
 }
-/* 
+/*
   Map<String, dynamic>? paymentIntentData;
   Future<void> makePayment(dynamic data, String total) async {
     try {

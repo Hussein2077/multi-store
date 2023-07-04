@@ -14,7 +14,7 @@ final String label;
         width: 282,
         decoration:  BoxDecoration(
           color: AppColor1.primaryColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(16),
 
         ),
         child: Center(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../on_boarding/color.dart';
+import '../on_boarding/imageassets.dart';
 
 class AuthMainButton extends StatelessWidget {
   final String mainButtonLabel;
@@ -134,4 +135,10 @@ extension EmailValidator on String {
             r'^([a-zA-Z0-9]+)([\-\_\.]*)([a-zA-Z0-9]*)([@])([a-zA-Z0-9]{2,})([\.][a-zA-Z]{2,3})$')
         .hasMatch(this);
   }
+}
+Widget logo (double height){
+  return SizedBox(
+      height: height,
+
+      child: Image.asset(AppImageAsset.logo));
 }

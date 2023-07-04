@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/appbar_widgets.dart';
+import 'package:multi_store_app/widgets/custom_text_field.dart';
 import 'package:multi_store_app/widgets/yellow_button.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -40,30 +41,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 'to reset your password \n\n please Enter your email address \n and click on the button below',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 24,
+                    fontSize: 16,
                     letterSpacing: 1.2,
-                    fontWeight: FontWeight.w100,
+                    fontWeight: FontWeight.w300,
                     fontFamily: 'acme'),
               ),
               const SizedBox(height: 50),
-              TextFormField(
-                controller: emailController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'please enter your email ';
-                  } else if (!value.isValidEmailAddress()) {
-                    return 'invalid email';
-                  } else if (value.isValidEmailAddress()) {
-                    return null;
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.emailAddress,
-                decoration: emailFormDecoration.copyWith(
-                  labelText: 'Email Address',
-                  hintText: 'Enter your email',
+              Center(
+                child: Column(
+                  children: [
+                    CustomTextField(
+                        controller: emailController,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'please enter your email ';
+                          } else if (!value.isValidEmailAddress()) {
+                            return 'invalid email';
+                          } else if (value.isValidEmailAddress()) {
+                            return null;
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.emailAddress,
+                        hintText: 'Enter your email',
+                        obscureText: false,
+                        prefixIcon: Icon(Icons.email_outlined),
+                        onChanged: (v){}),
+                  ],
                 ),
               ),
+
               const SizedBox(height: 80),
               YellowButton(
                   label: 'Send Reset Password Link',

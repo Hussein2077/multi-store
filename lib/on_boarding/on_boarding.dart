@@ -20,15 +20,15 @@ class OnBoarding extends StatelessWidget {
         body: SafeArea(
           child: SizedBox(
             height: MediaQuery.of(context).size.height*.98,
-            child: Column(children: [
-              const Expanded(
+            child: const Column(children: [
+              Expanded(
                 flex: 4,
                 child: CustomSliderOnBoarding(),
               ),
               Expanded(
                   flex: 1,
                   child: Column(
-                    children: const [
+                    children: [
                       CustomDotControllerOnBoarding(),
                       Spacer(flex: 2),
                       CustomButtonOnBoarding()

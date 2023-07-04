@@ -51,6 +51,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
         .signInWithCredential(credential)
         .whenComplete(() async {
       User user = FirebaseAuth.instance.currentUser!;
+
       print(googleUser!.id);
       print(FirebaseAuth.instance.currentUser!.uid);
       print(googleUser);
@@ -80,6 +81,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
   bool passwordVisible = true;
 
   void navigate() {
+    //Get.to(AppRoutes.customerHomeScreen);
     Navigator.pushReplacementNamed(context, '/customer_home');
   }
 
@@ -120,7 +122,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
+    // double w = MediaQuery.of(context).size.width;
     return ScaffoldMessenger(
       key: _scaffoldKey,
       child: Scaffold(
@@ -135,23 +137,33 @@ class _CustomerLoginState extends State<CustomerLogin> {
                   key: _formKey,
                   child: Center(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         // const AuthHeaderLabel(headerLabel: 'Log In'),
                         // const SizedBox(
                         //   height: 50,
                         // ),
-
+                        logo(h*.2),
+                        SizedBox(
+                          height: h * .019,
+                        ),
+                         const Text(
+                          'login as a Customer',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: AppColor1.grey,
+                          ),
+                        ),
                         Center(
                           child: Column(
                             children: [
-                              const Text(
-                                'Login to continue',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
+                              // const Text(
+                              //   'Login to continue',
+                              //   style: TextStyle(
+                              //     fontSize: 16,
+                              //     fontWeight: FontWeight.w500,
+                              //   ),
+                              // ),
                               SizedBox(
                                 height: h * .0142,
                               ),
@@ -188,7 +200,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
                                   password = value;
                                 },
                                 hintText: 'Password',
-                                obscureText: true,
+                                obscureText: passwordVisible,
                                 prefixIcon: const Icon(Icons.lock_outline),
                                 suffixIcon: IconButton(
                                     onPressed: () {
@@ -258,7 +270,9 @@ class _CustomerLoginState extends State<CustomerLogin> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   InkWell(
-                                    onTap:(){},
+                                    onTap:(){
+                                      signInWithGoogle();
+                                    },
                                       child: Image.asset(
                                           AppImageAsset.googleImage)),
                                 ],

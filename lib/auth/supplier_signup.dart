@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:multi_store_app/on_boarding/color.dart';
 import 'package:multi_store_app/providers/auht_repo.dart';
 import 'package:multi_store_app/widgets/auth_widgets.dart';
+import 'package:multi_store_app/widgets/custom_text_field.dart';
 import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -156,6 +157,8 @@ class _SupplierRegisterState extends State<SupplierRegister> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return ScaffoldMessenger(
       key: _scaffoldKey,
       child: Scaffold(
@@ -170,7 +173,11 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                   key: _formKey,
                   child: Column(
                     children: [
-                      const AuthHeaderLabel(headerLabel: 'Sign Up'),
+                      logo(h*.15),
+
+                      SizedBox(
+                        height: h * .01,
+                      ),
                       Row(
                         children: [
                           Padding(
@@ -227,7 +234,10 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
+                        child:CustomTextField(
+                          hintText: 'Enter your Full Name',
+                            obscureText: false,
+                            prefixIcon: const Icon(Icons.person),
                           validator: (value) {
                             if (value!.isEmpty) {
                               return 'please enter your full name';
@@ -236,52 +246,33 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                           },
                           onChanged: (value) {
                             storeName = value;
-                          },
-                          decoration: textFormDecoration.copyWith(
-                            labelText: 'Full Name',
-                            hintText: 'Enter your Full Name',
-                            labelStyle: const TextStyle(color: AppColor1.black),
-                          ),
-                        ),
+                          },)
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'please enter your email ';
-                            } else if (value.isValidEmail() == false) {
-                              return 'invalid email';
-                            } else if (value.isValidEmail() == true) {
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child:CustomTextField(
+                            hintText: 'Enter your Email',
+                            obscureText: false,
+                            prefixIcon: const Icon(Icons.email_outlined),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your email ';
+                              } else if (value.isValidEmail() == false) {
+                                return 'invalid email';
+                              } else if (value.isValidEmail() == true) {
+                                return null;
+                              }
                               return null;
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            email = value;
-                          },
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: textFormDecoration.copyWith(
-                            labelText: 'Email Address',
-                            hintText: 'Enter your email',
-                            labelStyle: const TextStyle(color: AppColor1.black),
-                          ),
-                        ),
+                            },
+                            onChanged: (value) {
+                              email = value;
+                            },
+                            keyboardType: TextInputType.emailAddress,
+                          )
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'please enter your password';
-                            }
-                            return null;
-                          },
-                          onChanged: (value) {
-                            password = value;
-                          },
-                          obscureText: passwordVisible,
-                          decoration: textFormDecoration.copyWith(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child:CustomTextField(
                             suffixIcon: IconButton(
                                 onPressed: () {
                                   setState(() {
@@ -293,12 +284,23 @@ class _SupplierRegisterState extends State<SupplierRegister> {
                                         ? Icons.visibility
                                         : Icons.visibility_off,
                                     color: AppColor1.primaryColor)),
-                            labelText: 'Password',
+
                             hintText: 'Enter your password',
-                            labelStyle: const TextStyle(color: AppColor1.black),
-                          ),
-                        ),
+
+                            prefixIcon: const Icon(Icons.email_outlined),
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'please enter your password';
+                              }
+                              return null;
+                            },
+                            onChanged: (value) {
+                              password = value;
+                            },
+                            obscureText: passwordVisible,
+                          )
                       ),
+
                       HaveAccount(
                         haveAccount: 'already have account? ',
                         actionLabel: 'Log In',

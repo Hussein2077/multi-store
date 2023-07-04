@@ -319,11 +319,16 @@
 //   }
 // }
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'package:multi_store_app/on_boarding/color.dart';
+import 'package:multi_store_app/on_boarding/imageassets.dart';
+import 'package:multi_store_app/utilities/routes.dart';
 
 
 import '../auth/customer_login.dart';
+import '../widgets/auth_widgets.dart';
 import '../widgets/custom_botton.dart';
 
 // class WelcomeScreen extends StatelessWidget {
@@ -399,17 +404,18 @@ class WelcomeScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            SizedBox(height: h*.39),
-
-            SizedBox(height: h*.27),
+            SizedBox(height: h*.3),
+        logo(h*.25),
+            SizedBox(height: h*.1),
             CustomButton(label: 'Login as Customer',onTap: (){
               // Get.toNamed(AppRoutes.login);
-              Navigator.pushReplacement<void, void>(
-                context,
-                MaterialPageRoute<void>(
-                  builder: (BuildContext context) => const CustomerLogin(),
-                ),
-              );
+              // Navigator.pushReplacement<void, void>(
+              //   context,
+              //   MaterialPageRoute<void>(
+              //     builder: (BuildContext context) => const CustomerLogin(),
+              //   ),
+              // );
+              Get.toNamed(AppRoutes.customerLogin);
             },),
             SizedBox(height: h*.01),
             customSignUp(context),
@@ -423,12 +429,13 @@ class WelcomeScreen extends StatelessWidget {
 Widget customSignUp(BuildContext context) {
   return InkWell(
     onTap: () {
-      Navigator.pushReplacement<void, void>(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => const CustomerLogin(),
-        ),
-      );
+      // Navigator.pushReplacement<void, void>(
+      //   context,
+      //   MaterialPageRoute<void>(
+      //     builder: (BuildContext context) => const CustomerLogin(),
+      //   ),
+      // );
+      Get.toNamed(AppRoutes.supplierRegister);
     },
     child: Container(
       height: 43,
